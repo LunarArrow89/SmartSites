@@ -145,7 +145,16 @@ targetY=((x-cx)/cx)*20;
 targetX=-((y-cy)/cy)*12;
 }
 
-document.addEventListener("mousemove",e=>updateTarget(e.clientX,e.clientY));
+document.addEventListener("mousemove",e=>{
+updateTarget(e.clientX,e.clientY);
+const rect=welcome.getBoundingClientRect();
+if(e.clientX>=rect.left&&e.clientX<=rect.right&&e.clientY>=rect.top&&e.clientY<=rect.bottom){
+const percent=((e.clientY-rect.top)/rect.height)*100;
+welcome.style.backgroundPosition=`50% ${percent}%`;
+}else{
+welcome.style.backgroundPosition="50% 50%";
+}
+});
 document.addEventListener("touchmove",e=>{
 if(e.touches.length)updateTarget(e.touches[0].clientX,e.touches[0].clientY);
 },{passive:true});
