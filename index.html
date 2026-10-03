@@ -44,26 +44,9 @@ transition:transform .08s ease-out;
 user-select:none;
 }
 
-h1::before{
-content:"WELCOME!";
-position:absolute;
-inset:0;
-z-index:-2;
--webkit-text-fill-color:#171728;
--webkit-text-stroke:clamp(6px,.75vw,11px)#11111c;
-transform:translate3d(0,24px,-18px);
-filter:brightness(.7);
-}
+h1::before{display:none;}
 
-h1::after{
-content:"WELCOME!";
-position:absolute;
-inset:0;
-z-index:-1;
--webkit-text-fill-color:transparent;
---webkit-text-stroke:clamp(2px,.4vw,6px)#11111c;
-transform:translate3d(0,13px,-9px);
-}
+h1::after{display:none;}
 
 .welcome-shadow{
 position:absolute;
