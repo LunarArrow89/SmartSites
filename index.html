@@ -47,7 +47,7 @@ transition:transform .08s ease-out;
 user-select:none;
 }
 
-h1::before{display:none;}
+#welcome{--shine-x:50%;--shine-y:50%;--shine-angle:90deg;overflow:hidden;}\n#welcome::after{content:"";position:absolute;inset:-50%;pointer-events:none;background:linear-gradient(var(--shine-angle),transparent 42%,rgba(255,255,255,.95) 49%,rgba(255,255,255,.25) 52%,transparent 59%);mix-blend-mode:screen;filter:blur(2px);opacity:0;transform:translate(calc((var(--shine-x) - 50%) * .12),calc((var(--shine-y) - 50%) * .12));transition:opacity .15s ease;z-index:20;}\n#welcome.shining::after{opacity:1;}\nh1::before{display:none;}
 
 h1::after{display:none;}
 
