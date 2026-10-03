@@ -31,12 +31,7 @@ font-weight:900;
 line-height:.82;
 letter-spacing:-.075em;
 white-space:nowrap;
-background:linear-gradient(to right,#ef5350,#f48fb1,#7e57c2,#2196f3,#26c6da,#43a047,#eeff41,#f9a825,#ff5722);
-background-size:500%;
--webkit-background-clip:text;
-background-clip:text;
--webkit-text-fill-color:transparent;
-color:transparent;
+color:#fff;
 animation:rainbow 7s linear infinite;
 position:relative;
 z-index:3;
@@ -47,8 +42,9 @@ transition:transform .08s ease-out;
 user-select:none;
 }
 
-#welcome{--shine-x:50%;--shine-y:50%;overflow:visible;padding:.12em .08em .16em;}
-#welcome.shining{filter:drop-shadow(calc((var(--shine-x) - 50%) * -0.12) calc((var(--shine-y) - 50%) * -0.12) 3px rgba(255,255,255,.95)) drop-shadow(calc((var(--shine-x) - 50%) * -0.22) calc((var(--shine-y) - 50%) * -0.22) 10px rgba(255,255,255,.5)) drop-shadow(0 7px 0 #00000055) drop-shadow(0 18px 12px #00000066);}
+#welcomeText{position:relative;display:inline-block;color:transparent;-webkit-text-fill-color:transparent;background:linear-gradient(to right,#ef5350,#f48fb1,#7e57c2,#2196f3,#26c6da,#43a047,#eeff41,#f9a825,#ff5722);background-size:500%;background-clip:text;-webkit-background-clip:text;animation:rainbow 7s linear infinite;}
+#welcomeText::after{content:attr(data-text);position:absolute;inset:0;color:transparent;-webkit-text-fill-color:transparent;-webkit-text-stroke:0;background:linear-gradient(var(--shine-angle,90deg),transparent 38%,transparent 45%,rgba(255,255,255,.98) 49%,rgba(255,255,255,.98) 51%,transparent 56%,transparent 66%);background-size:220% 100%;background-position:var(--shine-x,50%) var(--shine-y,50%);background-clip:text;-webkit-background-clip:text;opacity:0;pointer-events:none;transition:opacity .12s ease;}
+#welcome.shining #welcomeText::after{opacity:1;}
 .welcome-shadow{
 position:absolute;
 width:65%;
@@ -103,7 +99,7 @@ h1{font-size:clamp(3.8rem,18vw,6rem);letter-spacing:-.08em;-webkit-text-stroke:3
 
 <div class="welcome-container">
 <div class="welcome-shadow"></div>
-<h1 id="welcome">WELCOME!</h1>
+<h1 id="welcome"><span id="welcomeText">WELCOME!</span></h1>
 </div>
 
 <p class="hero-description">Hello! I am Luna and I make websites for fun! I can turn your great ideas into something incredible! >:D</p>
@@ -135,6 +131,8 @@ h1{font-size:clamp(3.8rem,18vw,6rem);letter-spacing:-.08em;-webkit-text-stroke:3
 
 <script>
 const welcome=document.getElementById("welcome");
+const welcomeText=document.getElementById("welcomeText");
+welcomeText.setAttribute("data-text",welcomeText.textContent);
 
 let targetX=0,targetY=0,currentX=0,currentY=0;
 let hovering=false;
