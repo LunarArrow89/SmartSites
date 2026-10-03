@@ -145,7 +145,7 @@ targetY=((x-cx)/cx)*20;
 targetX=-((y-cy)/cy)*12;
 }
 
-document.addEventListener("mousemove",e=>{\nupdateTarget(e.clientX,e.clientY);\nconst rect=welcome.getBoundingClientRect();\nif(e.clientX>=rect.left&&e.clientX<=rect.right&&e.clientY>=rect.top&&e.clientY<=rect.bottom){\nconst x=((e.clientX-rect.left)/rect.width)*100;\nconst y=((e.clientY-rect.top)/rect.height)*100;\nwelcome.style.setProperty("--shine-x",x+"%");\nwelcome.style.setProperty("--shine-y",y+"%");\nwelcome.classList.add("shining");\n}else{\nwelcome.classList.remove("shining");\n}\n});\ndocument.addEventListener("touchmove",e=>{
+document.addEventListener("mousemove",e=>{\nupdateTarget(e.clientX,e.clientY);\nconst rect=welcome.getBoundingClientRect();\nif(e.clientX>=rect.left&&e.clientX<=rect.right&&e.clientY>=rect.top&&e.clientY<=rect.bottom){\nconst x=((e.clientX-rect.left)/rect.width)*100;\nconst y=((e.clientY-rect.top)/rect.height)*100;\nwelcome.style.setProperty("--shine-x",x+"%");\nwelcome.style.setProperty("--shine-y",y+"%");\nconst angle=Math.atan2(y-50,x-50)*180/Math.PI+90;\nwelcome.style.setProperty("--shine-angle",angle+"deg");\nwelcome.classList.add("shining");\n}else{\nwelcome.classList.remove("shining");\n}\n});\ndocument.addEventListener("touchmove",e=>{
 if(e.touches.length)updateTarget(e.touches[0].clientX,e.touches[0].clientY);
 },{passive:true});
 
