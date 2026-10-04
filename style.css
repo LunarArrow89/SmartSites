@@ -54,3 +54,66 @@ body.quote-standalone .quote-page:before{
 body.quote-standalone .quote-back{
   background:#ffffff14;
 }
+
+/* Animated galaxy background inspired by the linked reference */
+body.quote-standalone{
+  background:#02030d;
+  position:relative;
+}
+body.quote-standalone::before{
+  z-index:0;
+  background:
+    radial-gradient(ellipse at 50% 55%, rgba(115,70,255,.22), transparent 38%),
+    radial-gradient(ellipse at 20% 30%, rgba(0,180,255,.18), transparent 30%),
+    radial-gradient(ellipse at 80% 70%, rgba(255,45,190,.16), transparent 30%),
+    linear-gradient(180deg,#01020a 0%,#05051a 55%,#01020a 100%);
+  animation: galaxyGlow 10s ease-in-out infinite alternate;
+}
+body.quote-standalone::after{
+  z-index:1;
+  opacity:.9;
+  background-image:
+    radial-gradient(circle,rgba(255,255,255,.95) 0 1px,transparent 1.6px),
+    radial-gradient(circle,rgba(180,210,255,.8) 0 .8px,transparent 1.5px),
+    radial-gradient(circle,rgba(255,255,255,.7) 0 .6px,transparent 1.3px);
+  background-size:73px 73px,121px 121px,197px 197px;
+  background-position:8px 15px,42px 70px,91px 31px;
+  animation: starDrift 45s linear infinite;
+}
+body.quote-standalone main{
+  z-index:3;
+}
+body.quote-standalone nav{
+  background:rgba(2,3,13,.62);
+  border-bottom-color:rgba(255,255,255,.12);
+}
+body.quote-standalone .quote-page{
+  background:
+    radial-gradient(ellipse at 50% 45%,rgba(111,67,255,.12),transparent 42%),
+    transparent;
+}
+body.quote-standalone .quote-page::after{
+  content:"";
+  position:absolute;
+  left:-20%;
+  right:-20%;
+  top:45%;
+  height:35%;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(96,68,255,.12),rgba(0,220,255,.09),rgba(255,70,210,.1),transparent);
+  filter:blur(45px);
+  transform:rotate(-8deg);
+  animation: galaxyBand 14s ease-in-out infinite alternate;
+}
+@keyframes galaxyGlow{
+  from{filter:hue-rotate(0deg) scale(1)}
+  to{filter:hue-rotate(18deg) scale(1.06)}
+}
+@keyframes starDrift{
+  from{background-position:8px 15px,42px 70px,91px 31px}
+  to{background-position:78px 95px,142px 10px,21px 131px}
+}
+@keyframes galaxyBand{
+  from{transform:translateX(-4%) rotate(-8deg) scale(1)}
+  to{transform:translateX(4%) rotate(-5deg) scale(1.08)}
+}
