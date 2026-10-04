@@ -117,3 +117,48 @@ body.quote-standalone .quote-page::after{
   from{transform:translateX(-4%) rotate(-8deg) scale(1)}
   to{transform:translateX(4%) rotate(-5deg) scale(1.08)}
 }
+
+
+/* Google Sheets request button */
+.quote-submit{
+  margin-top:28px;
+  text-align:center;
+}
+
+.quote-submit-button{
+  border:0;
+  border-radius:14px;
+  padding:14px 28px;
+  font-size:1rem;
+  font-weight:800;
+  color:#fff;
+  cursor:pointer;
+  background:linear-gradient(90deg,#ff1493,#8a5cff,#00cfff);
+  box-shadow:0 8px 28px rgba(130,80,255,.35);
+  transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease;
+}
+
+.quote-submit-button:hover{
+  transform:translateY(-2px) scale(1.02);
+  box-shadow:0 12px 34px rgba(130,80,255,.5);
+}
+
+.quote-submit-button:disabled{
+  opacity:.65;
+  cursor:wait;
+  transform:none;
+}
+
+.quote-submit-status{
+  min-height:24px;
+  margin:12px 0 0;
+  font-weight:700;
+}
+
+.quote-submit-status.success{
+  color:#8fffc1;
+}
+
+.quote-submit-status.error{
+  color:#ff9bbf;
+}
