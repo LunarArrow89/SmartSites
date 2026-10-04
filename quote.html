@@ -247,11 +247,50 @@
   <span id="total">$0</span>
 </div>
 
+
+<div class="quote-submit">
+  <button type="button" id="sendRequest" class="quote-submit-button">
+    Send Request
+  </button>
+  <p id="requestStatus" class="quote-submit-status"></p>
+</div>
+
+
+
 </div>
 </section>
 </main>
 
 <script>
+// =========================================================
+// GOOGLE SHEETS SETUP
+//
+// Paste your Google Apps Script Web App URL between the quotes.
+// Example:
+// const QUOTE_SHEET_URL = "https://script.google.com/macros/s/XXXXX/exec";
+//
+// The file google-apps-script.gs in this repo contains the
+// receiver code you can put into Google Apps Script.
+// =========================================================
+const QUOTE_SHEET_URL = "";
+
+function getSelections(){
+  const selections = {};
+
+  document.querySelectorAll('#quote .quote-question').forEach(question => {
+    const selected = question.querySelector('input:checked');
+    if (!selected) return;
+
+    const label = question.querySelector('label[for="' + selected.id + '"]');
+    const questionText = question.querySelector('h2')?.textContent.trim() || "Question";
+    const answerText = label ? label.textContent.replace(/\+\$[\d,]+$/, "").trim() : selected.id;
+
+    selections[questionText] = answerText;
+  });
+
+  return selections;
+}
+
 function updateTotal(){
   let total = 0;
 
@@ -272,6 +311,56 @@ document.querySelectorAll('#quote input').forEach(input => {
 });
 
 updateTotal();
+
+async function sendRequest(){
+  const status = document.getElementById("requestStatus");
+  const button = document.getElementById("sendRequest");
+
+  if (!QUOTE_SHEET_URL) {
+    status.textContent = "Google Sheets isn't connected yet. Add your Google Apps Script URL in quote.html.";
+    status.className = "quote-submit-status error";
+    return;
+  }
+
+  const selections = getSelections();
+
+  if (Object.keys(selections).length === 0) {
+    status.textContent = "Please choose at least one option first!";
+    status.className = "quote-submit-status error";
+    return;
+  }
+
+  const total = document.getElementById("total").textContent;
+
+  button.disabled = true;
+  button.textContent = "Sending...";
+  status.textContent = "";
+
+  try {
+    await fetch(QUOTE_SHEET_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        total,
+        selections
+      })
+    });
+
+    status.textContent = "Request sent! 🎉";
+    status.className = "quote-submit-status success";
+  } catch (error) {
+    status.textContent = "Something went wrong. Please try again.";
+    status.className = "quote-submit-status error";
+  } finally {
+    button.disabled = false;
+    button.textContent = "Send Request";
+  }
+}
+
+document.getElementById("sendRequest").addEventListener("click", sendRequest);
 </script>
 
 </body>
