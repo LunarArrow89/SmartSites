@@ -29,102 +29,94 @@
      EASY QUESTION EDITOR
      
      To ADD a question:
-     1. Copy one whole QUESTION block.
-     2. Paste it below another question.
-     3. Change the question text and answers.
+     Copy a whole quote-question block.
      
      To REMOVE a question:
-     Delete its whole QUESTION block.
+     Delete its whole quote-question block.
      
-     ANSWER FORMAT:
-     data-price="50"  = adds $50
-     data-price="0"   = adds nothing, but still shows $0
-     data-price=""    = NO PRICE IS SHOWN
-     
-     This means you can make questions that are just
-     collecting information and do not affect the price!
+     PRICE:
+     data-price="10" = adds $10
+     data-price="0"  = adds $0
+     data-price=""   = no price / information only
      ========================================================= -->
-
 
 <!-- QUESTION 1 -->
 <section class="quote-question">
   <h2>1. What kind of website?</h2>
-
   <div class="quote-choices">
 
     <div class="quote-choice">
-      <input type="radio" name="websiteType" id="personal" data-price="50">
-      <label for="personal">Personal<span class="quote-price">+$50</span></label>
+      <input type="radio" name="websiteType" id="personal" data-price="5">
+      <label for="personal">Personal<span class="quote-price">+$5</span></label>
     </div>
 
     <div class="quote-choice">
-      <input type="radio" name="websiteType" id="portfolio" data-price="75">
-      <label for="portfolio">Portfolio<span class="quote-price">+$75</span></label>
+      <input type="radio" name="websiteType" id="portfolio" data-price="10">
+      <label for="portfolio">Portfolio<span class="quote-price">+$10</span></label>
     </div>
 
     <div class="quote-choice">
-      <input type="radio" name="websiteType" id="business" data-price="100">
-      <label for="business">Business<span class="quote-price">+$100</span></label>
+      <input type="radio" name="websiteType" id="business" data-price="10">
+      <label for="business">Business<span class="quote-price">+$10</span></label>
     </div>
 
     <div class="quote-choice">
-      <input type="radio" name="websiteType" id="game" data-price="100">
-      <label for="game">Game<span class="quote-price">+$100</span></label>
+      <input type="radio" name="websiteType" id="game" data-price="25">
+      <label for="game">Game<span class="quote-price">+$25</span></label>
     </div>
 
   </div>
 </section>
-
 
 <!-- QUESTION 2 -->
 <section class="quote-question">
   <h2>2. How many pages?</h2>
-
   <div class="quote-choices">
 
     <div class="quote-choice">
-      <input type="radio" name="pages" id="pages1" data-price="25">
-      <label for="pages1">1–3 pages<span class="quote-price">+$25</span></label>
+      <input type="radio" name="pages" id="pages1" data-price="10">
+      <label for="pages1">1–2 pages<span class="quote-price">+$10</span></label>
     </div>
 
     <div class="quote-choice">
-      <input type="radio" name="pages" id="pages2" data-price="50">
-      <label for="pages2">4–7 pages<span class="quote-price">+$50</span></label>
+      <input type="radio" name="pages" id="pages2" data-price="20">
+      <label for="pages2">3–6 pages<span class="quote-price">+$20</span></label>
     </div>
 
     <div class="quote-choice">
-      <input type="radio" name="pages" id="pages3" data-price="75">
-      <label for="pages3">8+ pages<span class="quote-price">+$75</span></label>
+      <input type="radio" name="pages" id="pages3" data-price="30">
+      <label for="pages3">7+ pages<span class="quote-price">+$30</span></label>
     </div>
 
   </div>
 </section>
-
 
 <!-- QUESTION 3 -->
 <section class="quote-question">
-  <h2>3. Do you want animations?</h2>
-
+  <h2>3. Do you want Pixel art?</h2>
   <div class="quote-choices">
 
     <div class="quote-choice">
-      <input type="radio" name="animations" id="animationsNo" data-price="0">
-      <label for="animationsNo">No animations<span class="quote-price">+$0</span></label>
+      <input type="radio" name="pixelArt" id="pixelArtAnimations" data-price="20">
+      <label for="pixelArtAnimations">Yes, Animations<span class="quote-price">+$20</span></label>
     </div>
 
     <div class="quote-choice">
-      <input type="radio" name="animations" id="animationsYes" data-price="20">
-      <label for="animationsYes">Yes!<span class="quote-price">+$20</span></label>
+      <input type="radio" name="pixelArt" id="pixelArtImages" data-price="10">
+      <label for="pixelArtImages">Yes, Images<span class="quote-price">+$10</span></label>
+    </div>
+
+    <div class="quote-choice">
+      <input type="radio" name="pixelArt" id="pixelArtNo" data-price="0">
+      <label for="pixelArtNo">No<span class="quote-price">+$0</span></label>
     </div>
 
   </div>
 </section>
-
 
 <!-- QUESTION 4 -->
 <section class="quote-question">
   <h2>4. Do you want custom graphics?</h2>
-
   <div class="quote-choices">
 
     <div class="quote-choice">
@@ -140,122 +132,61 @@
   </div>
 </section>
 
-
 <!-- QUESTION 5 -->
 <section class="quote-question">
-  <h2>5. Do you want interactive stuff?</h2>
-
-  <div class="quote-choices">
-
-    <div class="quote-choice">
-      <input type="radio" name="interactive" id="interactiveNo" data-price="0">
-      <label for="interactiveNo">No<span class="quote-price">+$0</span></label>
-    </div>
-
-    <div class="quote-choice">
-      <input type="radio" name="interactive" id="interactiveYes" data-price="30">
-      <label for="interactiveYes">Yes!<span class="quote-price">+$30</span></label>
-    </div>
-
-  </div>
-</section>
-
-
-<!-- QUESTION 6 -->
-<section class="quote-question">
-  <h2>6. Should it work great on phones?</h2>
-
+  <h2>5. Will the UI be Crossplatform compatible?</h2>
   <div class="quote-choices">
 
     <div class="quote-choice">
       <input type="radio" name="mobile" id="mobileNo" data-price="0">
-      <label for="mobileNo">No<span class="quote-price">+$0</span></label>
+      <label for="mobileNo">No (Phones Only)<span class="quote-price">+$0</span></label>
     </div>
 
     <div class="quote-choice">
       <input type="radio" name="mobile" id="mobileYes" data-price="25">
-      <label for="mobileYes">Yes!<span class="quote-price">+$25</span></label>
+      <label for="mobileYes">Yes! (Phones and computer)<span class="quote-price">+$25</span></label>
     </div>
 
   </div>
 </section>
 
-
-<!-- QUESTION 7 -->
+<!-- QUESTION 6 -->
 <section class="quote-question">
-  <h2>7. How fancy should it be?</h2>
-
+  <h2>6. Whats the vibes?</h2>
   <div class="quote-choices">
 
     <div class="quote-choice">
       <input type="radio" name="fancy" id="fancySimple" data-price="0">
-      <label for="fancySimple">Simple<span class="quote-price">+$0</span></label>
+      <label for="fancySimple">Minimalist<span class="quote-price">+$0</span></label>
     </div>
 
     <div class="quote-choice">
-      <input type="radio" name="fancy" id="fancyCool" data-price="40">
-      <label for="fancyCool">Really cool<span class="quote-price">+$40</span></label>
+      <input type="radio" name="fancy" id="fancyCool" data-price="5">
+      <label for="fancyCool">Really cool<span class="quote-price">+$5</span></label>
     </div>
 
     <div class="quote-choice">
-      <input type="radio" name="fancy" id="fancyEpic" data-price="75">
-      <label for="fancyEpic">EPIC<span class="quote-price">+$75</span></label>
+      <input type="radio" name="fancy" id="fancySilly" data-price="5">
+      <label for="fancySilly">Silly :3<span class="quote-price">+$5</span></label>
+    </div>
+
+    <div class="quote-choice">
+      <input type="radio" name="fancy" id="fancyCrazy" data-price="10">
+      <label for="fancyCrazy">SUPER CRAZY (Tons of images and gifs)<span class="quote-price">+$10</span></label>
     </div>
 
   </div>
 </section>
-
-
-<!-- =========================================================
-     EXAMPLE: QUESTION WITH NO PRICES
-     
-     To make a question NOT affect the total:
-     - Give the inputs data-price=""
-     - Remove the quote-price span from the labels
-     
-     You can copy this block for any information-only question.
-     ========================================================= -->
-
-<!--
-<section class="quote-question">
-  <h2>8. What colors do you want?</h2>
-
-  <div class="quote-choices">
-
-    <div class="quote-choice">
-      <input type="radio" name="colors" id="blue" data-price="">
-      <label for="blue">Blue</label>
-    </div>
-
-    <div class="quote-choice">
-      <input type="radio" name="colors" id="purple" data-price="">
-      <label for="purple">Purple</label>
-    </div>
-
-    <div class="quote-choice">
-      <input type="radio" name="colors" id="pink" data-price="">
-      <label for="pink">Pink</label>
-    </div>
-
-  </div>
-</section>
--->
-
 
 <div class="quote-total">
   Estimated total<br>
   <span id="total">$0</span>
 </div>
 
-
 <div class="quote-submit">
-  <button type="button" id="sendRequest" class="quote-submit-button">
-    Send Request
-  </button>
+  <button type="button" id="sendRequest" class="quote-submit-button">Send Request</button>
   <p id="requestStatus" class="quote-submit-status"></p>
 </div>
-
-
 
 </div>
 </section>
@@ -265,12 +196,7 @@
 // =========================================================
 // GOOGLE SHEETS SETUP
 //
-// Paste your Google Apps Script Web App URL between the quotes.
-// Example:
-// const QUOTE_SHEET_URL = "https://script.google.com/macros/s/XXXXX/exec";
-//
-// The file google-apps-script.gs in this repo contains the
-// receiver code you can put into Google Apps Script.
+// Put your Google Apps Script Web App URL here.
 // =========================================================
 const QUOTE_SHEET_URL = "";
 
@@ -310,8 +236,6 @@ document.querySelectorAll('#quote input').forEach(input => {
   input.addEventListener('change', updateTotal);
 });
 
-updateTotal();
-
 async function sendRequest(){
   const status = document.getElementById("requestStatus");
   const button = document.getElementById("sendRequest");
@@ -330,8 +254,6 @@ async function sendRequest(){
     return;
   }
 
-  const total = document.getElementById("total").textContent;
-
   button.disabled = true;
   button.textContent = "Sending...";
   status.textContent = "";
@@ -344,7 +266,7 @@ async function sendRequest(){
         "Content-Type": "text/plain;charset=utf-8"
       },
       body: JSON.stringify({
-        total,
+        total: document.getElementById("total").textContent,
         selections
       })
     });
@@ -361,6 +283,8 @@ async function sendRequest(){
 }
 
 document.getElementById("sendRequest").addEventListener("click", sendRequest);
+
+updateTotal();
 </script>
 
 </body>
