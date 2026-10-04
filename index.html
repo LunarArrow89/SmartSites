@@ -8,85 +8,22 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{min-height:100vh;overflow-x:hidden;font-family:Arial,Helvetica,sans-serif;color:#fff;background:radial-gradient(circle at 20% 20%,#ff4fd8 0,transparent 28%),radial-gradient(circle at 80% 30%,#5d7cff 0,transparent 30%),radial-gradient(circle at 50% 100%,#00e5ff 0,transparent 35%),#080812}
-nav{position:fixed;top:0;left:0;width:100%;height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 7%;z-index:100;background:#08081299;backdrop-filter:blur(15px);border-bottom:1px solid #ffffff1f}
-.logo{font-size:1.5rem;font-weight:900;background:linear-gradient(90deg,#ff3cac,#784cff,#00d9ff,#40ff9a,#ffe14a,#ff3cac);background-size:300%;-webkit-background-clip:text;color:transparent;animation:rainbow 5s linear infinite}
-nav a{color:white;text-decoration:none;margin-left:25px;font-weight:bold;opacity:.8;transition:.2s}
-nav a:hover{opacity:1;color:#61eaff}
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 20px 70px;perspective:1200px;position:relative;overflow:hidden;background:#05091f}
-.hero::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,#fff 0 1px,transparent 1.5px);background-size:90px 90px;background-position:10px 20px;opacity:.8}
-.hero::after{display:none}
-.hero>*{position:relative;z-index:2}
-.small-text{font-size:1rem;letter-spacing:5px;text-transform:uppercase;opacity:.7;margin-bottom:20px}
-.welcome-container{position:relative;display:flex;justify-content:center;align-items:center;width:min(100%,1100px);min-height:260px;perspective:1200px}
+nav{position:fixed;top:0;left:0;width:100%;height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 7%;z-index:100;background:#08081299;backdrop-filter:blur(15px);border-bottom:1px solid #ffffff1f}.logo{font-size:1.5rem;font-weight:900;background:linear-gradient(90deg,#ff3cac,#784cff,#00d9ff,#40ff9a,#ffe14a,#ff3cac);background-size:300%;-webkit-background-clip:text;color:transparent;animation:rainbow 5s linear infinite}nav a{color:white;text-decoration:none;margin-left:25px;font-weight:bold;opacity:.8;transition:.2s}nav a:hover{opacity:1;color:#61eaff}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 20px 70px;perspective:1200px;position:relative;overflow:hidden;background:#05091f}.hero::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,#fff 0 1px,transparent 1.5px);background-size:90px 90px;background-position:10px 20px;opacity:.8}.hero::after{display:none}.hero>*{position:relative;z-index:2}.small-text{font-size:1rem;letter-spacing:5px;text-transform:uppercase;opacity:.7;margin-bottom:20px}.welcome-container{position:relative;display:flex;justify-content:center;align-items:center;width:min(100%,1100px);min-height:260px;perspective:1200px}
 h1{margin-top:0;margin-bottom:10px;font-family:Impact,"Arial Black",sans-serif;font-size:clamp(4.5rem,14vw,10rem);font-weight:900;line-height:.82;letter-spacing:-.075em;white-space:nowrap;color:#fff;position:relative;z-index:3;transform-style:preserve-3d;-webkit-text-stroke:clamp(3px,.45vw,7px)#11111c;filter:drop-shadow(0 7px 0 #00000055) drop-shadow(0 18px 12px #00000066);transition:transform .08s ease-out;user-select:none}
 #welcomeText{position:relative;display:inline-block;color:transparent;-webkit-text-fill-color:transparent;background:linear-gradient(to right,#ef5350,#f48fb1,#7e57c2,#2196f3,#26c6da,#43a047,#eeff41,#f9a825,#ff5722);background-size:500%;background-clip:text;-webkit-background-clip:text;animation:rainbow 7s linear infinite}
-#welcomeText::after{content:attr(data-text);position:absolute;inset:0;color:transparent;-webkit-text-fill-color:transparent;-webkit-text-stroke:0;background:linear-gradient(0deg,transparent 38%,transparent 45%,rgba(255,255,255,.98) 49%,rgba(255,255,255,.98) 51%,transparent 56%,transparent 66%);background-size:220% 100%;background-position:var(--shine-x,50%) var(--shine-y,50%);background-clip:text;-webkit-background-clip:text;opacity:0;pointer-events:none;transition:opacity .12s ease}
-#welcome.shining #welcomeText::after{opacity:1}
-.welcome-shadow{position:absolute;width:65%;height:38px;bottom:0;background:#00000080;filter:blur(25px);border-radius:50%;transform:scaleX(.9)}
-.hero-description{max-width:650px;margin-top:30px;font-size:1.25rem;line-height:1.7;color:#ffffffcc}
-.hero-buttons{display:flex;gap:15px;margin-top:35px;flex-wrap:wrap;justify-content:center}
-.button{padding:15px 25px;border-radius:999px;color:white;text-decoration:none;font-weight:bold;border:1px solid #ffffff33;background:#ffffff1a;backdrop-filter:blur(10px);transition:.25s}
-.button.primary{background:linear-gradient(90deg,#ff3cac,#784cff,#00d9ff);border:none;box-shadow:0 10px 30px #784cff4d}
-.button:hover{transform:translateY(-4px) scale(1.03)}
-.services{padding:100px 7%;max-width:1200px;margin:auto}
-.section-title{text-align:center;font-size:2.5rem;margin-bottom:50px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px}
-.card{padding:30px;border-radius:25px;background:#ffffff12;border:1px solid #ffffff1f;backdrop-filter:blur(15px);transition:.3s}
-.card:hover{transform:translateY(-8px);background:#ffffff1c;border-color:#ffffff4d}
-.card-icon{font-size:2.5rem;margin-bottom:15px}
-.card h3{margin-bottom:10px;font-size:1.3rem}
-.card p{line-height:1.6;color:#ffffffb3}
-footer{text-align:center;padding:40px 20px;color:#ffffff80;border-top:1px solid #ffffff1a}
-@keyframes shootingStar{0%{left:-220px;top:18%;opacity:0}10%{opacity:1}35%{left:120%;top:55%;opacity:0}100%{left:120%;top:55%;opacity:0}}
-@keyframes rainbow{0%{background-position:0 50%}100%{background-position:500% 50%}}
+#welcomeText::after{content:attr(data-text);position:absolute;inset:0;color:transparent;-webkit-text-fill-color:transparent;-webkit-text-stroke:0;background:linear-gradient(0deg,transparent 38%,transparent 45%,rgba(255,255,255,.98) 49%,rgba(255,255,255,.98) 51%,transparent 56%,transparent 66%);background-size:220% 100%;background-position:50% var(--shine-y,50%);background-clip:text;-webkit-background-clip:text;opacity:0;pointer-events:none;transition:opacity .12s ease}#welcome.shining #welcomeText::after{opacity:1}.welcome-shadow{position:absolute;width:65%;height:38px;bottom:0;background:#00000080;filter:blur(25px);border-radius:50%;transform:scaleX(.9)}
+.hero-description{max-width:650px;margin-top:30px;font-size:1.25rem;line-height:1.7;color:#ffffffcc}.hero-buttons{display:flex;gap:15px;margin-top:35px;flex-wrap:wrap;justify-content:center}.button{padding:15px 25px;border-radius:999px;color:white;text-decoration:none;font-weight:bold;border:1px solid #ffffff33;background:#ffffff1a;backdrop-filter:blur(10px);transition:.25s}.button.primary{background:linear-gradient(90deg,#ff3cac,#784cff,#00d9ff);border:none;box-shadow:0 10px 30px #784cff4d}.button:hover{transform:translateY(-4px) scale(1.03)}
+.services{padding:100px 7%;max-width:1200px;margin:auto}.section-title{text-align:center;font-size:2.5rem;margin-bottom:50px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px}.card{padding:30px;border-radius:25px;background:#ffffff12;border:1px solid #ffffff1f;backdrop-filter:blur(15px);transition:.3s}.card:hover{transform:translateY(-8px);background:#ffffff1c;border-color:#ffffff4d}.card-icon{font-size:2.5rem;margin-bottom:15px}.card h3{margin-bottom:10px;font-size:1.3rem}.card p{line-height:1.6;color:#ffffffb3}footer{text-align:center;padding:40px 20px;color:#ffffff80;border-top:1px solid #ffffff1a}
+@keyframes shootingStar{0%{left:-220px;top:18%;opacity:0}10%{opacity:1}35%{left:120%;top:55%;opacity:0}100%{left:120%;top:55%;opacity:0}}@keyframes rainbow{0%{background-position:0 50%}100%{background-position:500% 50%}}
 @media(max-width:600px){nav{padding:0 20px}nav div:last-child{display:none}h1{font-size:clamp(3.8rem,18vw,6rem);letter-spacing:-.08em;-webkit-text-stroke:3px #11111c}.welcome-container{min-height:180px}.hero-description{font-size:1rem}.services{padding:70px 20px}.section-title{font-size:2rem}}
 </style>
-</head>
-<body>
-<nav>
-<div class="logo">SMARTSITES</div>
-<div><a href="#services">Services</a><a href="#contact">Contact</a></div>
-</nav>
-<main>
-<section class="hero">
-<div class="small-text">Websites • Design • Development</div>
-<div class="welcome-container">
-<div class="welcome-shadow"></div>
-<h1 id="welcome"><span id="welcomeText">WELCOME!</span></h1>
-</div>
-<p class="hero-description">Hello! I am Luna and I make websites for fun! I can turn your great ideas into something incredible! >:D</p>
-<div class="hero-buttons">
-<a class="button primary" href="#services">See What I Make</a>
-<a class="button" href="#contact">Get Started</a>
-</div>
-</section>
-<section class="services" id="services">
-<h2 class="section-title">What I Can Make</h2>
-<div class="cards">
-<div class="card"><div class="card-icon">🌐</div><h3>Websites</h3><p>Fun websites for a cheap price!</p></div>
-<div class="card"><div class="card-icon">🎨</div><h3>Cool Gadgets</h3><p>Fun, weird, and other silly things like the welcome title at the top!</p></div>
-<div class="card"><div class="card-icon">⚡</div><h3>Pixel art</h3><p>I can make pixel art for your website for almost anything!</p></div>
-<div class="card"><div class="card-icon">📱</div><h3>Crossplatform UI</h3><p>Websites that have great UI designs on phones, tablets, and computers.</p></div>
-</div>
-</section>
-<section class="services" id="contact">
-<h2 class="section-title">Let's build Something EPIC >:3</h2>
-<p class="hero-description" style="margin:auto;text-align:center">Have an idea? Lets make it a website!.</p>
-<div class="hero-buttons"><a class="button primary" href="mailto:you@example.com">Contact Me</a></div>
-</section>
-</main>
-<footer>© 2026 SmartSites (JK I don't have copyright lmfao)</footer>
+</head><body>
+<nav><div class="logo">SMARTSITES</div><div><a href="#services">Services</a><a href="#contact">Contact</a></div></nav><main><section class="hero"><div class="small-text">Websites • Design • Development</div><div class="welcome-container"><div class="welcome-shadow"></div><h1 id="welcome"><span id="welcomeText">WELCOME!</span></h1></div><p class="hero-description">Hello! I am Luna and I make websites for fun! I can turn your great ideas into something incredible! >:D</p><div class="hero-buttons"><a class="button primary" href="#services">See What I Make</a><a class="button" href="#contact">Get Started</a></div></section><section class="services" id="services"><h2 class="section-title">What I Can Make</h2><div class="cards"><div class="card"><div class="card-icon">🌐</div><h3>Websites</h3><p>Fun websites for a cheap price!</p></div><div class="card"><div class="card-icon">🎨</div><h3>Cool Gadgets</h3><p>Fun, weird, and other silly things like the welcome title at the top!</p></div><div class="card"><div class="card-icon">⚡</div><h3>Pixel art</h3><p>I can make pixel art for your website for almost anything!</p></div><div class="card"><div class="card-icon">📱</div><h3>Crossplatform UI</h3><p>Websites that have great UI designs on phones, tablets, and computers.</p></div></div></section><section class="services" id="contact"><h2 class="section-title">Let's build Something EPIC >:3</h2><p class="hero-description" style="margin:auto;text-align:center">Have an idea? Lets make it a website!.</p><div class="hero-buttons"><a class="button primary" href="mailto:you@example.com">Contact Me</a></div></section></main><footer>© 2026 SmartSites (JK I don't have copyright lmfao)</footer>
 <script>
-const welcome=document.getElementById("welcome");
-const welcomeText=document.getElementById("welcomeText");
-welcomeText.setAttribute("data-text",welcomeText.textContent);
-let targetX=0,targetY=0,currentX=0,currentY=0;
-let hovering=false;
+const welcome=document.getElementById("welcome"),welcomeText=document.getElementById("welcomeText");welcomeText.setAttribute("data-text",welcomeText.textContent);let targetX=0,targetY=0,currentX=0,currentY=0,hovering=false;
 welcome.addEventListener("mouseenter",()=>{hovering=true;welcome.classList.add("shining")});
-welcome.addEventListener("mouseleave",()=>{hovering=false;targetX=0;targetY=0;welcome.classList.remove("shining");welcome.style.setProperty("--shine-x","50%");welcome.style.setProperty("--shine-y","50%")});
-welcome.addEventListener("mousemove",e=>{const rect=welcome.getBoundingClientRect();const x=((e.clientX-rect.left)/rect.width)*100;const y=((e.clientY-rect.top)/rect.height)*100;targetY=((x-50)/50)*16;targetX=-((y-50)/50)*10;welcome.style.setProperty("--shine-x",x+"%");welcome.style.setProperty("--shine-y",y+"%")});
-function animate(){if(!hovering){targetX=0;targetY=0}currentX+=(targetX-currentX)*.1;currentY+=(targetY-currentY)*.1;welcome.style.transform=`scaleX(.92) rotateX(${currentX}deg) rotateY(${currentY}deg)`;requestAnimationFrame(animate)}
-animate();
-</script>
-</body>
-</html>
+welcome.addEventListener("mouseleave",()=>{hovering=false;targetX=0;targetY=0;welcome.classList.remove("shining");welcome.style.setProperty("--shine-y","50%")});
+welcome.addEventListener("mousemove",e=>{const r=welcome.getBoundingClientRect(),y=((e.clientY-r.top)/r.height)*100;targetX=-((y-50)/50)*10;welcome.style.setProperty("--shine-y",y+"%")});
+function animate(){if(!hovering)targetX=0;currentX+=(targetX-currentX)*.1;welcome.style.transform=`scaleX(.92) rotateX(${currentX}deg)`;requestAnimationFrame(animate)}animate();
+</script></body></html>
