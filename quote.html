@@ -25,6 +25,21 @@
 <h2 class="quote-title">What website do you want?</h2>
 <p class="quote-subtitle">Pick what you want and the total will update automatically!</p>
 
+<div class="quote-question quote-name-question">
+  <h2><label for="customerName">What's your name? <span aria-hidden="true">*</span></label></h2>
+  <p class="quote-name-help">Please enter your name so I know who sent the request.</p>
+  <input
+    type="text"
+    id="customerName"
+    name="customerName"
+    autocomplete="name"
+    maxlength="100"
+    placeholder="Enter your name"
+    required
+    aria-required="true"
+  >
+</div>
+
 <!-- =========================================================
      EASY QUESTION EDITOR
      
@@ -35,7 +50,7 @@
      Delete its whole quote-question block.
      
      PRICE:
-     data-price="5" = adds $10
+     data-price="5" = adds $5
      data-price="0"  = adds $0
      data-price=""   = no price / information only
      ========================================================= -->
@@ -246,6 +261,16 @@ async function sendRequest(){
     return;
   }
 
+  const customerNameInput = document.getElementById("customerName");
+  const customerName = customerNameInput.value.trim();
+
+  if (!customerName) {
+    status.textContent = "Please enter your name before sending your request.";
+    status.className = "quote-submit-status error";
+    customerNameInput.focus();
+    return;
+  }
+
   const selections = getSelections();
 
   if (Object.keys(selections).length === 0) {
@@ -266,6 +291,7 @@ async function sendRequest(){
         "Content-Type": "text/plain;charset=utf-8"
       },
       body: JSON.stringify({
+        name: customerName,
         total: document.getElementById("total").textContent,
         selections
       })
