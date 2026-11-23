@@ -126,87 +126,74 @@ window.addEventListener("resize", updateContactCircle);
 updateContactCircle();
 
 
-// Smooth, continuous color-inverting cursor pen.
-if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-  const trailCanvas = document.createElement("canvas");
-  trailCanvas.className = "cursor-trail-canvas";
-  trailCanvas.setAttribute("aria-hidden", "true");
-  document.body.appendChild(trailCanvas);
+// Continuous SVG pen trail with a true difference-blend inversion.
+(function installInvertingTrail() {
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
-  const ctx = trailCanvas.getContext("2d", { alpha: true });
+  const overlay = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  overlay.setAttribute("aria-hidden", "true");
+  overlay.classList.add("cursor-trail-overlay");
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("fill", "none");
+  path.setAttribute("stroke", "#fff");
+  path.setAttribute("stroke-width", "22");
+  path.setAttribute("stroke-linecap", "round");
+  path.setAttribute("stroke-linejoin", "round");
+  overlay.appendChild(path);
+  document.body.appendChild(overlay);
+
   let previous = null;
-  let hasPointer = false;
+  let pathData = "";
+  let fadeTimer = null;
 
-  function resizeTrailCanvas() {
-    const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    trailCanvas.width = Math.round(window.innerWidth * ratio);
-    trailCanvas.height = Math.round(window.innerHeight * ratio);
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.lineWidth = 22;
-    ctx.strokeStyle = "#fff";
-    ctx.fillStyle = "#fff";
-  }
-
-  function drawSmoothSegment(from, to) {
-    const dx = to.x - from.x;
-    const dy = to.y - from.y;
-    const distance = Math.hypot(dx, dy);
-    // Fill in gaps between widely spaced mouse events so fast movement
-    // still produces one solid pen stroke instead of separated dots.
-    const steps = Math.max(1, Math.ceil(distance / 3));
-    ctx.beginPath();
-    ctx.moveTo(from.x, from.y);
-    for (let i = 1; i <= steps; i++) {
-      const t = i / steps;
-      ctx.lineTo(from.x + dx * t, from.y + dy * t);
-    }
-    ctx.stroke();
-  }
-
-  function handlePointerMove(event) {
-    hasPointer = true;
+  function move(event) {
     const samples = typeof event.getCoalescedEvents === "function"
       ? event.getCoalescedEvents()
       : [event];
 
-    for (const sample of samples.length ? samples : [event]) {
+    for (const sample of (samples.length ? samples : [event])) {
       const point = { x: sample.clientX, y: sample.clientY };
-      if (previous) {
-        drawSmoothSegment(previous, point);
+      if (!previous) {
+        pathData = "M " + point.x + " " + point.y;
       } else {
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, 11, 0, Math.PI * 2);
-        ctx.fill();
+        const distance = Math.hypot(point.x - previous.x, point.y - previous.y);
+        const steps = Math.max(1, Math.ceil(distance / 2));
+        for (let i = 1; i <= steps; i++) {
+          const t = i / steps;
+          const x = previous.x + (point.x - previous.x) * t;
+          const y = previous.y + (point.y - previous.y) * t;
+          pathData += " L " + x.toFixed(1) + " " + y.toFixed(1);
+        }
       }
       previous = point;
     }
+
+    path.setAttribute("d", pathData);
+    path.style.opacity = "1";
+    clearTimeout(fadeTimer);
+    fadeTimer = setTimeout(() => {
+      path.style.opacity = "0";
+      setTimeout(() => {
+        if (path.style.opacity === "0") {
+          pathData = "";
+          previous = null;
+          path.setAttribute("d", "");
+        }
+      }, 900);
+    }, 80);
   }
 
-  window.addEventListener("resize", resizeTrailCanvas);
-  window.addEventListener("pointermove", handlePointerMove, { passive: true });
+  window.addEventListener("pointermove", move, { passive: true });
   window.addEventListener("pointerleave", () => {
     previous = null;
-    hasPointer = false;
+    clearTimeout(fadeTimer);
+    path.style.opacity = "0";
+    setTimeout(() => {
+      pathData = "";
+      path.setAttribute("d", "");
+    }, 900);
   });
-  window.addEventListener("pointerenter", () => {
-    hasPointer = true;
-  });
-
-  function fadeCursorTrail() {
-    // Fade slowly so the full stroke remains visible as a connected line.
-    ctx.save();
-    ctx.globalCompositeOperation = "destination-out";
-    ctx.fillStyle = "rgba(0,0,0,0.012)";
-    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-    ctx.restore();
-    requestAnimationFrame(fadeCursorTrail);
-  }
-
-  resizeTrailCanvas();
-  fadeCursorTrail();
-}
+})();
 
 </script>
 </body>
