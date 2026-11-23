@@ -215,3 +215,11 @@ body.quote-standalone .quote-page::after{
   #contact{min-height:85vh;padding:80px 20px}
   #contact::before{width:280px}
 }
+
+
+/* Reliable scroll-driven circle scaling (works without scroll-timeline support) */
+#contact::before{
+  animation:none !important;
+  transform:translate(-50%,-50%) scale(var(--contact-circle-scale,.18));
+  transition:transform .04s linear;
+}
