@@ -247,3 +247,58 @@ body.quote-standalone .quote-page::after{
 @media (hover:none),(pointer:coarse){
   .cursor-trail-dot{display:none}
 }
+
+
+/* Background reset: remove the old galaxy, star, and scroll-glow effects. */
+body{
+  background:#080812;
+}
+.hero{
+  background:#05091f;
+}
+.hero::before{
+  display:none;
+}
+#contact::before{
+  display:none;
+}
+body.quote-standalone{
+  background:#f4a261;
+  color:#3b2118;
+}
+body.quote-standalone::before{
+  display:none;
+}
+body.quote-standalone::after{
+  content:"";
+  position:fixed;
+  inset:-120px;
+  z-index:0;
+  pointer-events:none;
+  opacity:1;
+  background-color:#f4a261;
+  background-image:
+    conic-gradient(#f6bd9a 25%,transparent 0 50%,#f6bd9a 0 75%,transparent 0);
+  background-size:112px 112px;
+  background-position:0 0;
+  animation:peachCheckerDrift 2.8s linear infinite;
+}
+body.quote-standalone nav{
+  background:rgba(72,38,24,.88);
+  border-bottom-color:rgba(255,255,255,.2);
+}
+body.quote-standalone main{
+  position:relative;
+  z-index:2;
+}
+body.quote-standalone .quote-page{
+  background:transparent;
+}
+body.quote-standalone .quote-page::before,
+body.quote-standalone .quote-page::after{
+  display:none;
+}
+@keyframes peachCheckerDrift{
+  from{background-position:0 0}
+  to{background-position:112px 112px}
+}
