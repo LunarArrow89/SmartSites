@@ -357,3 +357,11 @@ body.quote-standalone .quote-page .quote-question > h2 label{
   background:none !important;
   background-image:none !important;
 }
+
+
+/* Keep every bit of text inside the blue question cards white. */
+body.quote-standalone .quote-page .quote-question,
+body.quote-standalone .quote-page .quote-question *{
+  color:#fff !important;
+  -webkit-text-fill-color:#fff !important;
+}
