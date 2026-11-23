@@ -343,7 +343,7 @@ body.quote-standalone .quote-page .quote-subtitle{
 }
 .cursor-trail-overlay path{
   opacity:0;
-  transition:opacity .45s ease-out !important;
+  transition:opacity .16s ease-out !important;
 }
 @media (hover:none),(pointer:coarse){
   .cursor-trail-overlay{display:none !important}
