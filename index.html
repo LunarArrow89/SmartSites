@@ -105,6 +105,26 @@ function animateWelcome() {
 }
 
 animateWelcome();
+
+const contactSection = document.getElementById("contact");
+
+function updateContactCircle() {
+  if (!contactSection) return;
+
+  const rect = contactSection.getBoundingClientRect();
+  const viewportHeight = window.innerHeight;
+  const progress = Math.max(0, Math.min(1,
+    (viewportHeight - rect.top) / (viewportHeight + rect.height)
+  ));
+
+  const scale = 0.18 + progress * 4.62;
+  contactSection.style.setProperty("--contact-circle-scale", scale.toFixed(3));
+}
+
+window.addEventListener("scroll", updateContactCircle, { passive: true });
+window.addEventListener("resize", updateContactCircle);
+updateContactCircle();
+
 </script>
 </body>
 </html>
