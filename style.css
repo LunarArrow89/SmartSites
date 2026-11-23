@@ -311,3 +311,39 @@ body.quote-standalone .quote-title{
 body.quote-standalone .quote-subtitle{
   color:#633b29;
 }
+
+
+/* Force the quote-page heading to match the peach checkerboard, never rainbow. */
+body.quote-standalone .quote-page h2.quote-title{
+  color:#4a281b !important;
+  background:transparent !important;
+  background-image:none !important;
+  -webkit-background-clip:border-box !important;
+  background-clip:border-box !important;
+  -webkit-text-fill-color:#4a281b !important;
+  animation:none !important;
+  text-shadow:0 2px 0 rgba(255,235,216,.8),0 7px 18px rgba(92,48,25,.18) !important;
+}
+body.quote-standalone .quote-page .quote-subtitle{
+  color:#633b29 !important;
+}
+
+/* SVG pen stroke blends against the page beneath it to invert every pixel touched. */
+.cursor-trail-overlay{
+  position:fixed !important;
+  inset:0 !important;
+  width:100vw !important;
+  height:100vh !important;
+  z-index:2147483647 !important;
+  display:block !important;
+  overflow:visible !important;
+  pointer-events:none !important;
+  mix-blend-mode:difference !important;
+  isolation:auto !important;
+}
+.cursor-trail-overlay path{
+  transition:opacity .85s ease !important;
+}
+@media (hover:none),(pointer:coarse){
+  .cursor-trail-overlay{display:none !important}
+}
