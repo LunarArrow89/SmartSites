@@ -125,6 +125,24 @@ window.addEventListener("scroll", updateContactCircle, { passive: true });
 window.addEventListener("resize", updateContactCircle);
 updateContactCircle();
 
+
+// Leave a short-lived trail that color-inverts everything beneath it.
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  let lastTrailTime = 0;
+  window.addEventListener("pointermove", (event) => {
+    const now = performance.now();
+    if (now - lastTrailTime < 14) return;
+    lastTrailTime = now;
+
+    const dot = document.createElement("span");
+    dot.className = "cursor-trail-dot";
+    dot.style.left = event.clientX + "px";
+    dot.style.top = event.clientY + "px";
+    document.body.appendChild(dot);
+    dot.addEventListener("animationend", () => dot.remove(), { once: true });
+  }, { passive: true });
+}
+
 </script>
 </body>
 </html>
