@@ -126,21 +126,63 @@ window.addEventListener("resize", updateContactCircle);
 updateContactCircle();
 
 
-// Leave a short-lived trail that color-inverts everything beneath it.
+// Smooth continuous cursor trail. White pixels on a difference-blended
+// canvas invert the colors directly underneath the stroke.
 if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-  let lastTrailTime = 0;
-  window.addEventListener("pointermove", (event) => {
-    const now = performance.now();
-    if (now - lastTrailTime < 14) return;
-    lastTrailTime = now;
+  const trailCanvas = document.createElement("canvas");
+  trailCanvas.className = "cursor-trail-canvas";
+  trailCanvas.setAttribute("aria-hidden", "true");
+  document.body.appendChild(trailCanvas);
 
-    const dot = document.createElement("span");
-    dot.className = "cursor-trail-dot";
-    dot.style.left = event.clientX + "px";
-    dot.style.top = event.clientY + "px";
-    document.body.appendChild(dot);
-    dot.addEventListener("animationend", () => dot.remove(), { once: true });
+  const trailContext = trailCanvas.getContext("2d");
+  let previousPoint = null;
+
+  function resizeTrailCanvas() {
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    trailCanvas.width = Math.round(window.innerWidth * ratio);
+    trailCanvas.height = Math.round(window.innerHeight * ratio);
+    trailContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+    trailContext.lineCap = "round";
+    trailContext.lineJoin = "round";
+    trailContext.lineWidth = 18;
+    trailContext.strokeStyle = "#fff";
+    trailContext.fillStyle = "#fff";
+  }
+
+  window.addEventListener("resize", resizeTrailCanvas);
+  resizeTrailCanvas();
+
+  window.addEventListener("pointermove", (event) => {
+    const point = { x: event.clientX, y: event.clientY };
+
+    if (previousPoint) {
+      trailContext.beginPath();
+      trailContext.moveTo(previousPoint.x, previousPoint.y);
+      trailContext.lineTo(point.x, point.y);
+      trailContext.stroke();
+    } else {
+      trailContext.beginPath();
+      trailContext.arc(point.x, point.y, 9, 0, Math.PI * 2);
+      trailContext.fill();
+    }
+
+    previousPoint = point;
   }, { passive: true });
+
+  window.addEventListener("pointerleave", () => {
+    previousPoint = null;
+  });
+
+  function fadeCursorTrail() {
+    trailContext.save();
+    trailContext.globalCompositeOperation = "destination-out";
+    trailContext.fillStyle = "rgba(0,0,0,0.035)";
+    trailContext.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    trailContext.restore();
+    requestAnimationFrame(fadeCursorTrail);
+  }
+
+  fadeCursorTrail();
 }
 
 </script>
