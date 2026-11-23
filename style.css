@@ -225,27 +225,18 @@ body.quote-standalone .quote-page::after{
 }
 
 
-/* Inverting cursor trail */
-.cursor-trail-dot{
+/* Smooth color-inverting cursor pen stroke */
+.cursor-trail-canvas{
   position:fixed;
-  left:0;
-  top:0;
-  width:22px;
-  height:22px;
-  border-radius:50%;
-  background:#fff;
-  mix-blend-mode:difference;
+  inset:0;
+  width:100vw;
+  height:100vh;
   pointer-events:none;
   z-index:9999;
-  transform:translate(-50%,-50%) scale(1);
-  opacity:.9;
-  animation:cursorTrailFade .65s ease-out forwards;
-}
-@keyframes cursorTrailFade{
-  to{transform:translate(-50%,-50%) scale(.12);opacity:0}
+  mix-blend-mode:difference;
 }
 @media (hover:none),(pointer:coarse){
-  .cursor-trail-dot{display:none}
+  .cursor-trail-canvas{display:none}
 }
 
 
