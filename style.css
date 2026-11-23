@@ -293,3 +293,19 @@ body.quote-standalone .quote-page::after{
   from{background-position:0 0}
   to{background-position:112px 112px}
 }
+
+
+/* Warm, non-rainbow heading for the peach checker quote page */
+body.quote-standalone .quote-title{
+  color:#4a281b;
+  background:none;
+  background-image:none;
+  -webkit-background-clip:initial;
+  background-clip:initial;
+  -webkit-text-fill-color:#4a281b;
+  animation:none;
+  text-shadow:0 2px 0 rgba(255,235,216,.75),0 7px 18px rgba(92,48,25,.16);
+}
+body.quote-standalone .quote-subtitle{
+  color:#633b29;
+}
