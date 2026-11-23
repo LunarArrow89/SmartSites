@@ -166,7 +166,7 @@ updateContactCircle();
       previous = null;
       path.setAttribute("d", "");
       fading = false;
-    }, 500);
+    }, 190);
   }
 
   function move(event) {
@@ -205,7 +205,7 @@ updateContactCircle();
 
     path.setAttribute("d", pathData);
     path.style.opacity = "1";
-    idleTimer = setTimeout(startFade, 220);
+    idleTimer = setTimeout(startFade, 35);
   }
 
   function stop() {
