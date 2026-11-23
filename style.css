@@ -162,3 +162,56 @@ body.quote-standalone .quote-page::after{
 .quote-submit-status.error{
   color:#ff9bbf;
 }
+
+
+/* Scroll-growing glow circle behind the final call-to-action */
+#contact{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+#contact::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  left:50%;
+  top:50%;
+  width:340px;
+  aspect-ratio:1;
+  border-radius:50%;
+  transform:translate(-50%,-50%) scale(.18);
+  transform-origin:center;
+  background:
+    radial-gradient(circle at 35% 30%,rgba(0,225,255,.8),transparent 35%),
+    radial-gradient(circle at 68% 68%,rgba(255,55,205,.8),transparent 42%),
+    radial-gradient(circle,rgba(111,67,255,.52) 0%,rgba(69,42,170,.28) 48%,rgba(20,15,65,.04) 72%,transparent 74%);
+  border:1px solid rgba(180,160,255,.35);
+  box-shadow:0 0 65px rgba(111,67,255,.28),inset 0 0 55px rgba(0,210,255,.12);
+  filter:blur(.2px);
+}
+@supports (animation-timeline:view()){
+  #contact::before{
+    animation:contactCircleGrow linear both;
+    animation-timeline:view(block);
+    animation-range:entry 0% exit 100%;
+  }
+}
+@keyframes contactCircleGrow{
+  from{transform:translate(-50%,-50%) scale(.18);opacity:.45}
+  to{transform:translate(-50%,-50%) scale(4.8);opacity:1}
+}
+#contact .section-title,
+#contact .hero-description,
+#contact .hero-buttons{
+  position:relative;
+  z-index:1;
+}
+@media(max-width:600px){
+  #contact{min-height:85vh;padding:80px 20px}
+  #contact::before{width:280px}
+}
