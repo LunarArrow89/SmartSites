@@ -126,35 +126,70 @@ window.addEventListener("resize", updateContactCircle);
 updateContactCircle();
 
 
-// Continuous SVG pen trail with a true difference-blend inversion.
+// Smooth inverting cursor stroke with a clean, reliable fade.
 (function installInvertingTrail() {
   if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
-  const overlay = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  overlay.setAttribute("aria-hidden", "true");
-  overlay.classList.add("cursor-trail-overlay");
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.classList.add("cursor-trail-overlay");
+  svg.setAttribute("aria-hidden", "true");
+
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
   path.setAttribute("fill", "none");
   path.setAttribute("stroke", "#fff");
-  path.setAttribute("stroke-width", "22");
+  path.setAttribute("stroke-width", "20");
   path.setAttribute("stroke-linecap", "round");
   path.setAttribute("stroke-linejoin", "round");
-  overlay.appendChild(path);
-  document.body.appendChild(overlay);
+  svg.appendChild(path);
+  document.body.appendChild(svg);
 
   let previous = null;
   let pathData = "";
-  let fadeTimer = null;
+  let idleTimer = null;
+  let clearTimer = null;
+  let fading = false;
+  let fadeVersion = 0;
+
+  function clearTimers() {
+    clearTimeout(idleTimer);
+    clearTimeout(clearTimer);
+  }
+
+  function startFade() {
+    if (!pathData || fading) return;
+    fading = true;
+    const version = ++fadeVersion;
+    path.style.opacity = "0";
+    clearTimer = setTimeout(() => {
+      if (version !== fadeVersion) return;
+      pathData = "";
+      previous = null;
+      path.setAttribute("d", "");
+      fading = false;
+    }, 500);
+  }
 
   function move(event) {
+    clearTimers();
+
+    // Start a fresh stroke if the previous one has begun fading.
+    if (fading) {
+      ++fadeVersion;
+      pathData = "";
+      previous = null;
+      path.setAttribute("d", "");
+      fading = false;
+    }
+
     const samples = typeof event.getCoalescedEvents === "function"
       ? event.getCoalescedEvents()
       : [event];
 
     for (const sample of (samples.length ? samples : [event])) {
       const point = { x: sample.clientX, y: sample.clientY };
+
       if (!previous) {
-        pathData = "M " + point.x + " " + point.y;
+        pathData = "M " + point.x.toFixed(1) + " " + point.y.toFixed(1);
       } else {
         const distance = Math.hypot(point.x - previous.x, point.y - previous.y);
         const steps = Math.max(1, Math.ceil(distance / 2));
@@ -170,28 +205,20 @@ updateContactCircle();
 
     path.setAttribute("d", pathData);
     path.style.opacity = "1";
-    clearTimeout(fadeTimer);
-    fadeTimer = setTimeout(() => {
-      path.style.opacity = "0";
-      setTimeout(() => {
-        if (path.style.opacity === "0") {
-          pathData = "";
-          previous = null;
-          path.setAttribute("d", "");
-        }
-      }, 900);
-    }, 80);
+    idleTimer = setTimeout(startFade, 220);
+  }
+
+  function stop() {
+    clearTimers();
+    previous = null;
+    startFade();
   }
 
   window.addEventListener("pointermove", move, { passive: true });
-  window.addEventListener("pointerleave", () => {
-    previous = null;
-    clearTimeout(fadeTimer);
-    path.style.opacity = "0";
-    setTimeout(() => {
-      pathData = "";
-      path.setAttribute("d", "");
-    }, 900);
+  window.addEventListener("pointerleave", stop);
+  window.addEventListener("blur", stop);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stop();
   });
 })();
 
