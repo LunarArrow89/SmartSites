@@ -347,3 +347,13 @@ body.quote-standalone .quote-page .quote-subtitle{
 @media (hover:none),(pointer:coarse){
   .cursor-trail-overlay{display:none !important}
 }
+
+
+/* Make only the question headings inside the blue quote boxes white. */
+body.quote-standalone .quote-page .quote-question > h2,
+body.quote-standalone .quote-page .quote-question > h2 label{
+  color:#fff !important;
+  -webkit-text-fill-color:#fff !important;
+  background:none !important;
+  background-image:none !important;
+}
