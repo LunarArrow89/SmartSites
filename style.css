@@ -365,3 +365,11 @@ body.quote-standalone .quote-page .quote-question *{
   color:#fff !important;
   -webkit-text-fill-color:#fff !important;
 }
+
+
+/* Make the estimated total box text white without changing any text sizes. */
+body.quote-standalone .quote-page .quote-total,
+body.quote-standalone .quote-page .quote-total *{
+  color:#fff !important;
+  -webkit-text-fill-color:#fff !important;
+}
