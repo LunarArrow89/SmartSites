@@ -229,10 +229,12 @@ body.quote-standalone .quote-page::after{
 .cursor-trail-canvas{
   position:fixed;
   inset:0;
+  display:block;
   width:100vw;
   height:100vh;
   pointer-events:none;
-  z-index:9999;
+  z-index:2147483647;
+  background:transparent;
   mix-blend-mode:difference;
 }
 @media (hover:none),(pointer:coarse){
