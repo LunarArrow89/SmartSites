@@ -274,7 +274,8 @@ updateTotal();
 </script>
 
 <script>
-// Smooth inverting cursor stroke with a clean, reliable fade.
+// Short, continuously updating cursor trail. Older parts are trimmed
+// on every movement, so the trail never waits for the cursor to stop.
 (function installInvertingTrail() {
   if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
@@ -282,91 +283,102 @@ updateTotal();
   svg.classList.add("cursor-trail-overlay");
   svg.setAttribute("aria-hidden", "true");
 
+  const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+  const gradient = document.createElementNS("http://www.w3.org/2000/svg", "linearGradient");
+  gradient.id = "cursorTrailFade";
+  gradient.setAttribute("gradientUnits", "userSpaceOnUse");
+  const startStop = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+  startStop.setAttribute("offset", "0%");
+  startStop.setAttribute("stop-color", "white");
+  startStop.setAttribute("stop-opacity", "0");
+  const endStop = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+  endStop.setAttribute("offset", "100%");
+  endStop.setAttribute("stop-color", "white");
+  endStop.setAttribute("stop-opacity", "1");
+  gradient.append(startStop, endStop);
+  defs.appendChild(gradient);
+  svg.appendChild(defs);
+
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
   path.setAttribute("fill", "none");
-  path.setAttribute("stroke", "#fff");
-  path.setAttribute("stroke-width", "20");
+  path.setAttribute("stroke", "url(#cursorTrailFade)");
+  path.setAttribute("stroke-width", "18");
   path.setAttribute("stroke-linecap", "round");
   path.setAttribute("stroke-linejoin", "round");
   svg.appendChild(path);
   document.body.appendChild(svg);
 
-  let previous = null;
-  let pathData = "";
-  let idleTimer = null;
-  let clearTimer = null;
-  let fading = false;
-  let fadeVersion = 0;
+  const points = [];
+  const maxLength = 105;
 
-  function clearTimers() {
-    clearTimeout(idleTimer);
-    clearTimeout(clearTimer);
-  }
-
-  function startFade() {
-    if (!pathData || fading) return;
-    fading = true;
-    const version = ++fadeVersion;
-    path.style.opacity = "0";
-    clearTimer = setTimeout(() => {
-      if (version !== fadeVersion) return;
-      pathData = "";
-      previous = null;
+  function updateTrail() {
+    if (points.length < 2) {
       path.setAttribute("d", "");
-      fading = false;
-    }, 190);
+      return;
+    }
+
+    // Keep only the newest 105 pixels of the stroke.
+    let remaining = maxLength;
+    const trimmed = [points[points.length - 1]];
+
+    for (let i = points.length - 2; i >= 0 && remaining > 0; i--) {
+      const newer = trimmed[trimmed.length - 1];
+      const older = points[i];
+      const distance = Math.hypot(newer.x - older.x, newer.y - older.y);
+
+      if (distance <= remaining) {
+        trimmed.push(older);
+        remaining -= distance;
+      } else {
+        const ratio = remaining / distance;
+        trimmed.push({
+          x: newer.x + (older.x - newer.x) * ratio,
+          y: newer.y + (older.y - newer.y) * ratio
+        });
+        remaining = 0;
+      }
+    }
+
+    trimmed.reverse();
+    const first = trimmed[0];
+    const last = trimmed[trimmed.length - 1];
+
+    gradient.setAttribute("x1", first.x);
+    gradient.setAttribute("y1", first.y);
+    gradient.setAttribute("x2", last.x);
+    gradient.setAttribute("y2", last.y);
+
+    path.setAttribute("d", trimmed.map((point, index) =>
+      (index === 0 ? "M " : "L ") + point.x.toFixed(1) + " " + point.y.toFixed(1)
+    ).join(" "));
   }
 
   function move(event) {
-    clearTimers();
-
-    // Start a fresh stroke if the previous one has begun fading.
-    if (fading) {
-      ++fadeVersion;
-      pathData = "";
-      previous = null;
-      path.setAttribute("d", "");
-      fading = false;
-    }
-
     const samples = typeof event.getCoalescedEvents === "function"
       ? event.getCoalescedEvents()
       : [event];
 
     for (const sample of (samples.length ? samples : [event])) {
       const point = { x: sample.clientX, y: sample.clientY };
-
-      if (!previous) {
-        pathData = "M " + point.x.toFixed(1) + " " + point.y.toFixed(1);
-      } else {
-        const distance = Math.hypot(point.x - previous.x, point.y - previous.y);
-        const steps = Math.max(1, Math.ceil(distance / 2));
-        for (let i = 1; i <= steps; i++) {
-          const t = i / steps;
-          const x = previous.x + (point.x - previous.x) * t;
-          const y = previous.y + (point.y - previous.y) * t;
-          pathData += " L " + x.toFixed(1) + " " + y.toFixed(1);
-        }
+      const last = points[points.length - 1];
+      if (!last || Math.hypot(point.x - last.x, point.y - last.y) > 0.5) {
+        points.push(point);
       }
-      previous = point;
     }
 
-    path.setAttribute("d", pathData);
-    path.style.opacity = "1";
-    idleTimer = setTimeout(startFade, 35);
+    updateTrail();
   }
 
-  function stop() {
-    clearTimers();
-    previous = null;
-    startFade();
+  function clearTrail() {
+    points.length = 0;
+    path.setAttribute("d", "");
   }
 
   window.addEventListener("pointermove", move, { passive: true });
-  window.addEventListener("pointerleave", stop);
-  window.addEventListener("blur", stop);
+  window.addEventListener("pointerleave", clearTrail);
+  window.addEventListener("blur", clearTrail);
   document.addEventListener("visibilitychange", () => {
-    if (document.hidden) stop();
+    if (document.hidden) clearTrail();
   });
 })();
 </script>
