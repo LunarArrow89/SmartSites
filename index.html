@@ -205,6 +205,8 @@ updateContactCircle();
     ).join(" "));
   }
 
+  let idleTimer;
+
   function move(event) {
     const samples = typeof event.getCoalescedEvents === "function"
       ? event.getCoalescedEvents()
@@ -219,9 +221,12 @@ updateContactCircle();
     }
 
     updateTrail();
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(clearTrail, 140);
   }
 
   function clearTrail() {
+    clearTimeout(idleTimer);
     points.length = 0;
     path.setAttribute("d", "");
   }
